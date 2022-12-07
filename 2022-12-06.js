@@ -11,10 +11,6 @@ const numDifferentIntegers = word => {
   const array = word.split(/[a-z]+/).filter(str => str !== "");
   console.log(array);
   const set = new Set();
-  array.forEach(str => {
-    set.add(getString(str) || "0");
-  });
+  array.forEach(str => set.add(getString(str) || "0"));
   return set.size;
 };
-
-// 啊啊啊 commit message 写错了

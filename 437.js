@@ -21,7 +21,7 @@ const rootSum = (node, targetSum) => {
   return ans;
 };
 
-var pathSum = function(root, targetSum) {
+const pathSum = (root, targetSum) => {
   let count = 0;
   if (root === null) return count;
   count += rootSum(root, targetSum);

@@ -24,12 +24,14 @@ const rotate = matrix => {
     const len = n - 2 * depth;
     for (let i = 0; i < len - 1; i++) {
       const temp = matrix[depth][depth + i];
-
-
+      matrix[depth][depth + i] = matrix[depth + len - i - 1][depth];
+      matrix[depth + len - i - 1][depth] = matrix[depth + len - 1][depth + len - i - 1];
+      matrix[depth + len - 1][depth + len - i - 1] = matrix[depth + i][depth + len - 1];
+      matrix[depth + i][depth + len - 1] = temp;
     }
-
+    depth++;
   }
-
+  return matrix;
 };
 
 // expected output: [[7,4,1],[8,5,2],[9,6,3]]

@@ -1,3 +1,10 @@
+/*
+3. 无重复字符的最长子串
+
+给定一个字符串 s ，请你找出其中不含有重复字符的最长子串的长度。
+ */
+
+// 滑动窗口，移动左边界和右边界
 var lengthOfLongestSubstring = function(s) {
   if (s.length === 1) return 1;
   let max = 0;

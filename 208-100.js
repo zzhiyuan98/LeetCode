@@ -1,10 +1,5 @@
-function TreeNode(val) {
-  this.val = val;
-  this.children = [];
-}
-
 var Trie = function() {
-
+  this.children = {};
 };
 
 /**
@@ -12,7 +7,14 @@ var Trie = function() {
  * @return {void}
  */
 Trie.prototype.insert = function(word) {
-
+  let node = this.children;
+  for (const char of word) {
+    if (!node[char]) {
+      node[char] = {};
+    }
+    node = node[char];
+  }
+  node.isEnd = true;
 };
 
 /**
@@ -20,7 +22,12 @@ Trie.prototype.insert = function(word) {
  * @return {boolean}
  */
 Trie.prototype.search = function(word) {
-
+  let node = this.children;
+  for (const char of word) {
+    if (!node[char]) return false;
+    node = node[char];
+  }
+  return !!node.isEnd;
 };
 
 /**
@@ -28,5 +35,10 @@ Trie.prototype.search = function(word) {
  * @return {boolean}
  */
 Trie.prototype.startsWith = function(prefix) {
-
+  let node = this.children;
+  for (const char of prefix) {
+    if (!node[char]) return false;
+    node = node[char];
+  }
+  return true;
 };

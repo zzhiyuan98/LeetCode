@@ -1,18 +1,39 @@
+/*
+394. 字符串解码
+
+给定一个经过编码的字符串，返回它解码后的字符串。
+
+编码规则为: k[encoded_string]，表示其中方括号内部的 encoded_string 正好重复 k 次。注意 k 保证为正整数。
+
+你可以认为输入字符串总是有效的；输入字符串中没有额外的空格，且输入的方括号总是符合格式要求的。
+
+此外，你可以认为原始数据不包含数字，所有的数字只表示重复的次数 k ，例如不会出现像 3a 或 2[4] 的输入。
+ */
+
+const isNumber = char => /^\d$/.test(char);
+
+const isLetter = char => /^[a-z]$/.test(char);
+
 const decodeString = s => {
-  // first in last out
-  // stack
-  const num_stack = [];
-  const letter_stack = [];
-  let ans = "";
-  const isNumber = char => /^\d$/.test(char);
-  const isLetter = char => /^[a-z]$/.test(char);
+  const stack = [];
+  let multi = "";
+  let res = "";
   for (const char of s) {
-    if (isNumber(char)) num_stack.push(char);
-    else if (isLetter(char)) letter_stack.push(char);
-
+    if (isNumber(char)) multi += char;
+    else if (isLetter(char)) res += char;
+    else if (char === "[") {
+      stack.push([parseInt(multi), res]);
+      multi = "";
+      res = "";
+    }
+    else if (char === "]") {
+      const [num, prev] = stack.pop();
+      res = prev + res.repeat(num)
+    }
   }
-
+  return res;
 };
 
+// expected output: "aaabcbc"
 const s = "3[a]2[bc]";
 console.log(decodeString(s));

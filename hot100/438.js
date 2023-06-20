@@ -7,16 +7,17 @@
 */
 
 const findAnagrams = (s, p) => {
-  const cnt = new Map();
+  const cnt = new Map(); // 需要满足的字符统计
   for (const char of p) {
     const count = cnt.has(char) ? cnt.get(char) + 1 : 1;
     cnt.set(char, count);
   }
-  const window = new Map();
+  // [left, right) 左开右闭
   let left = 0;
   let right = 0;
-  let validCount = 0;
   const ans = [];
+  const window = new Map(); // 窗口中的字符统计
+  let validCount = 0; // 满足条件的字符个数
   while (right < s.length) {
     const rightChar = s[right];
     right++;

@@ -15,4 +15,4 @@ const leastInterval = (tasks, n) => {
 // expected output: 8
 const tasks = ["A", "A", "A", "B", "B", "B"];
 const n = 2;
-console.log(leastInterval(tasks, n)));
+console.log(leastInterval(tasks, n));

@@ -9,7 +9,21 @@
 */
 
 const leastInterval = (tasks, n) => {
-  return 0;
+  const cnt = new Map();
+  for (const task of tasks) {
+    const count = cnt.has(task) ? cnt.get(task) + 1 : 1;
+    cnt.set(task, count);
+  }
+  let max = -Infinity;
+  let maxCount = 0;
+  for (const value of cnt.values()) {
+    if (value > max) {
+      max = value;
+      maxCount = 1;
+    }
+    else if (value === max) maxCount++;
+  }
+  return Math.max(tasks.length, (max - 1) * (n + 1) + maxCount);
 };
 
 // expected output: 8

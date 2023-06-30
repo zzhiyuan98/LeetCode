@@ -27,4 +27,5 @@ function main() {
   const toBeRemoved = [1,6];
   console.log(removeInterval(intervals, toBeRemoved));
 }
-main()
+
+export default removeInterval;

@@ -27,6 +27,10 @@ const insert = (intervals, newInterval) => {
   return ans;
 };
 
-const intervals = [];
-const newInterval = [4,8];
-console.log(insert(intervals, newInterval));
+function main() {
+  const intervals = [];
+  const newInterval = [4,8];
+  console.log(insert(intervals, newInterval));
+}
+
+export default insert;

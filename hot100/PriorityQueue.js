@@ -62,4 +62,12 @@ export default class PriorityQueue {
   getMax() {
     return this.heap[0];
   }
+
+  isEmpty() {
+    return this.heap.length === 0;
+  }
+
+  getSize() {
+    return this.heap.length;
+  }
 }

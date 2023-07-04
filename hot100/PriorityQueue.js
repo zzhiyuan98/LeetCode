@@ -1,6 +1,7 @@
-export default class MaxHeap {
-  constructor() {
+export default class PriorityQueue {
+  constructor(compareFn) {
     this.heap = [];
+    this.compareFn = compareFn === undefined ? (a, b) => a > b : compareFn;
   }
 
   getParent(i) {
@@ -17,7 +18,7 @@ export default class MaxHeap {
 
   shiftUp(index) {
     let i = index;
-    while (i > 0 && this.heap[i] > this.heap[this.getParent(i)]) {
+    while (i > 0 && this.compareFn(this.heap[i], this.heap[this.getParent(i)])) {
       this.swap(i, this.getParent(i));
       i = this.getParent(i);
     }
@@ -32,11 +33,11 @@ export default class MaxHeap {
   shiftDown(i) {
     let maxIndex = i;
     const leftChild = this.getLeftChild(i);
-    if (leftChild < this.heap.length && this.heap[leftChild] > this.heap[maxIndex]) {
+    if (leftChild < this.heap.length && this.compareFn(this.heap[leftChild], this.heap[maxIndex])) {
       maxIndex = leftChild;
     }
     const rightChild = this.getRightChild(i);
-    if (rightChild < this.heap.length && this.heap[rightChild] > this.heap[maxIndex]) {
+    if (rightChild < this.heap.length && this.compareFn(this.heap[rightChild], this.heap[maxIndex])) {
       maxIndex = rightChild;
     }
     if (i !== maxIndex) {
@@ -61,29 +62,4 @@ export default class MaxHeap {
   getMax() {
     return this.heap[0];
   }
-
-  remove(i) {
-    this.heap[i] = this.getMax() + 1;
-    this.shiftUp(i);
-    this.extractMax();
-  }
-
-  changePriority(i, p) {
-    const oldP = this.heap[i];
-    this.heap[i] = p;
-    if (p > oldP) {
-      this.shiftUp(i);
-    }
-    else {
-      this.shiftDown(i);
-    }
-  }
 }
-
-const q = new MaxHeap();
-q.insert(-1);
-q.insert(-4);
-q.insert(5);
-console.log(q.getMax());
-q.extractMax();
-console.log(q.getMax());

@@ -6,12 +6,22 @@
 返回滑动窗口中的最大值。
 */
 
-const maxSlidingWindow = (nums, k) => {
-  let left = 0;
-  let right = 0;
-  while (right < nums.length) {
+import PriorityQueue from "./PriorityQueue.js";
 
+const maxSlidingWindow = (nums, k) => {
+  const q = new PriorityQueue((a, b) => a[0] > b[0]);
+  for (let i = 0; i < k; i++) {
+    q.insert([nums[i], i])
   }
+  const ans = [q.getMax()[0]];
+  for (let i = k; i < nums.length; i++) {
+    q.insert([nums[i], i]);
+    while (q.getMax()[1] <= i - k) {
+      q.extractMax();
+    }
+    ans.push(q.getMax()[0]);
+  }
+  return ans;
 };
 
 // expected output: [3,3,5,5,6,7]

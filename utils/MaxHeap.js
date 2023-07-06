@@ -79,11 +79,3 @@ export default class MaxHeap {
     }
   }
 }
-
-const q = new MaxHeap();
-q.insert(-1);
-q.insert(-4);
-q.insert(5);
-console.log(q.getMax());
-q.extractMax();
-console.log(q.getMax());

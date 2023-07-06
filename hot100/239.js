@@ -6,7 +6,7 @@
 返回滑动窗口中的最大值。
 */
 
-import PriorityQueue from "./PriorityQueue.js";
+import PriorityQueue from "../utils/PriorityQueue.js";
 
 const maxSlidingWindow = (nums, k) => {
   const q = new PriorityQueue((a, b) => a[0] > b[0]);

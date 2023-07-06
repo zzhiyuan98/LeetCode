@@ -4,7 +4,7 @@
 给你一个整数数组 nums 和一个整数 k ，请你返回其中出现频率前 k 高的元素。你可以按任意顺序返回答案。
  */
 
-import PriorityQueue from "./PriorityQueue.js";
+import PriorityQueue from "../utils/PriorityQueue.js";
 
 const topKFrequent = (nums, k) => {
   const cnt = new Map();

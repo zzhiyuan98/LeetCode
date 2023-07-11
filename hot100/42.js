@@ -9,17 +9,24 @@ const trap = height => {
   const max = Math.max(...height);
   let count = 0;
   for (let i = 1; i <= max; i++) {
-    let temp = undefined;
+    let sum = undefined;
     for (let j = 0; j < height.length; j++) {
-      if (i > height[j]) {
-        if (temp === undefined) continue;
-        temp += 1;
-      }
-      else {
-        if (temp === undefined) temp = 0;
+      // 柱子高度覆盖目标高度
+      if (height[j] >= i) {
+        // 启动计数器
+        if (sum === undefined) {
+          sum = 0;
+        }
+        // 计入总数，重制计数器
         else {
-          count += temp;
-          temp = 0;
+          count += sum;
+          sum = 0;
+        }
+      }
+      // 柱子高度小于目标高度
+      else {
+        if (Number.isInteger(sum)) {
+          sum += 1;
         }
       }
     }
@@ -40,7 +47,9 @@ const trap1 = height => {
       maxRight = Math.max(maxRight, height[j]);
     }
     const min = Math.min(maxLeft, maxRight);
-    if (min > height[i]) sum += min - height[i];
+    if (min > height[i]) {
+      sum += min - height[i];
+    }
   }
   return sum;
 };
@@ -62,7 +71,9 @@ const trap2 = height => {
   let sum = 0;
   for (let i = 1; i < height.length - 1; i++) {
     const min = Math.min(maxLeft[i], maxRight[i]);
-    if (min > height[i]) sum += min - height[i];
+    if (min > height[i]) {
+      sum += min - height[i];
+    }
   }
   return sum;
 };

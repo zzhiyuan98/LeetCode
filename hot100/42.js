@@ -78,5 +78,27 @@ const trap2 = height => {
   return sum;
 };
 
+// 栈 O(n) O(n)
+const trap3 = height => {
+  let sum = 0;
+  const stack = [];
+  const getTop = () => stack[stack.length - 1];
+  for (let i = 0; i < height.length; i++) {
+    while (stack.length && height[i] > height[getTop()]) {
+      const h = height[stack.pop()];
+      if (!stack.length) {
+        break;
+      }
+      // 两根柱子的最小高度
+      const min = Math.min(height[getTop()], height[i]);
+      const distance = i - getTop() - 1;
+      sum += distance * (min - h);
+    }
+    stack.push(i);
+  }
+  return sum;
+};
+
+// 6
 const height = [0,1,0,2,1,0,1,3,2,1,2,1];
-console.log(trap2(height));
+console.log(trap3(height));

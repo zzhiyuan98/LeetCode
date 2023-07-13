@@ -1,31 +1,19 @@
+/*
+49. 字母异位词分组
+
+给你一个字符串数组，请你将字母异位词组合在一起。可以按任意顺序返回结果列表。
+
+字母异位词 是由重新排列源单词的所有字母得到的一个新单词。
+ */
+
 const groupAnagrams = strs => {
-  const ans = [];
-  const isAnagram = (str1, str2) => {
-    if (str1.length !== str2.length) return false;
-    const a1 = Array.from(str1).sort();
-    const a2 = Array.from(str2).sort();
-    const sorted1 = a1.join("");
-    const sorted2 = a2.join("");
-    return sorted1 === sorted2;
-  };
-
-  const helper = str => {
-    for (const array of ans) {
-      const sample = array[0];
-      if (isAnagram(sample, str)) {
-        array.push(str);
-        return true;
-      }
-    }
-    return false;
-  };
-
+  const map = new Map();
   for (const str of strs) {
-    if (helper(str)) continue;
-    ans.push([str]);
+    const key = Array.from(str).sort().toString();
+    const list = map.has(key) ? map.get(key) : [];
+    map.set(key, list.concat(str));
   }
-
-  return ans;
+  return [...map.values()];
 };
 
 // expected output: [["bat"],["nat","tan"],["ate","eat","tea"]]

@@ -6,13 +6,10 @@
 请设计一个算法来实现二叉树的序列化与反序列化。这里不限定你的序列 / 反序列化算法执行逻辑，你只需要保证一个二叉树可以被序列化为一个字符串并且将这个字符串反序列化为原始的树结构。
 */
 
-/**
- * Definition for a binary tree node.
- * function TreeNode(val) {
- *     this.val = val;
- *     this.left = this.right = null;
- * }
- */
+function TreeNode(val) {
+  this.val = val;
+  this.left = this.right = null;
+}
 
 /**
  * Encodes a tree to a single string.
@@ -20,7 +17,7 @@
  * @param {TreeNode} root
  * @return {string}
  */
-var serialize = function(root) {
+export const serialize = function(root) {
   const ans = [];
   const queue = [root];
   while (queue.length !== 0) {
@@ -43,7 +40,7 @@ var serialize = function(root) {
  * @param {string} data
  * @return {TreeNode}
  */
-var deserialize = function(data) {
+export const deserialize = function(data) {
   const values = data.split(",");
   const getNodeByValue = value => value === "#" ? null : new TreeNode(value);
   const root = getNodeByValue(values.shift());

@@ -44,12 +44,12 @@ export default class PQ {
 
   shiftDown(i) {
     const leftChild = this.getLeftChild(i);
-    const rightChild = this.getLeftChild(i);
+    const rightChild = this.getRightChild(i);
     let maxIndex = i;
-    if (this.compareFn(this.heap[leftChild], this.heap[i])) {
+    if (leftChild < this.size && this.compareFn(this.heap[leftChild], this.heap[maxIndex])) {
       maxIndex = leftChild;
     }
-    if (this.compareFn(this.heap[rightChild], this.heap[i])) {
+    if (rightChild < this.size && this.compareFn(this.heap[rightChild], this.heap[maxIndex])) {
       maxIndex = rightChild;
     }
     if (maxIndex === i) {

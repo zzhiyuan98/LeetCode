@@ -25,6 +25,9 @@ export default class PQ {
   }
 
   shiftUp(i) {
+    if (i === 0) {
+      return;
+    }
     const parent = this.getParent(i);
     if (this.compareFn(this.heap[i], this.heap[parent])) {
       this.swap(i, parent);

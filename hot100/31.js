@@ -1,47 +1,38 @@
 const nextPermutation = nums => {
-  const getNum = i => nums[i];
-  const swap = (x, y) => {
-    const temp = getNum(x);
-    nums[x] = getNum(y);
-    nums[y] = temp;
+  const n = nums.length;
+  if (n === 1) {
+    return nums;
+  }
+  const swap = (i, j) => {
+    const temp = nums[i];
+    nums[i] = nums[j];
+    nums[j] = temp;
   };
-  /*
-    从数组末尾开始，找到第一个组合 i, j (i < j) 使得 nums[i] < nums[j]
-    从数组末尾到 j，找到第一个比 nums[i] 小的数，与之交换位置
-    返回 j 的位置
-  */
-  const helper = () => {
-    let right = nums.length - 1;
-    while (right > 0) {
-      const cur = getNum(right);
-      const prev = getNum(right - 1);
-      if (cur > prev) {
-        for (let i = nums.length - 1; i >= right; i--) {
-          if (getNum(i) > prev) {
-            swap(i, right - 1);
-            return right;
-          }
-        }
-      }
-      right--;
+  // 从后向前查找第一个相邻升序列（i，i + 1)
+  let i = n - 2;
+  while (i >= 0 && nums[i] >= nums[i + 1]) {
+    i--;
+  }
+  // 从后向前查找第一个比 nums[i] 大的数，与之交换位置
+  if (i >= 0) {
+    let j = n - 1;
+    while (j > i && nums[j] <= nums[i]) {
+      j--;
     }
-    return right;
-  };
-  const right = helper();
-  // 从 j 开始到数组末尾，升序排列
-  for (let i = right; i < nums.length; i++) {
-    let min = getNum(i);
-    let minIndex = i;
-    for (let j = i + 1; j < nums.length; j++) {
-      if (getNum(j) < min) {
-        min = getNum(j);
-        minIndex = j;
-      }
+    swap(i, j);
+  }
+  // 交换后 i 之后的数需要按升序排列（此前必然为降序）
+  let left = i + 1; // 包含 i = -1 的边界情况
+  let right = n - 1;
+  while (left < right) {
+    if (nums[left] > nums[right]) {
+      swap(left, right);
     }
-    swap(i, minIndex);
+    left++;
+    right--;
   }
   return nums;
 };
 
-const nums = [1 ,3, 2];
+const nums = [1];
 console.log(nextPermutation(nums));

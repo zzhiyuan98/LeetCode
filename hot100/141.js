@@ -17,13 +17,13 @@
  */
 
 const hasCycle = head => {
-  const dummyHead = new ListNode(-1, head);
-  let slow = dummyHead;
+  if (!head) return false;
+  let slow = head;
   let fast = head;
-  while (fast) {
+  while (fast?.next) {
+    fast = fast.next.next;
     slow = slow.next;
-    fast = fast.next?.next;
-    if (slow === fast) return true;
+    if (fast === slow) return true;
   }
   return false;
 };

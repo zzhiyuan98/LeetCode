@@ -1,21 +1,29 @@
+/*
+139. 单词拆分
+
+给你一个字符串 s 和一个字符串列表 wordDict 作为字典。请你判断是否可以利用字典中出现的单词拼接出 s。
+
+注意：不要求字典中出现的单词全部都使用，并且字典中的单词可以重复使用。
+ */
+
 const wordBreak = (s, wordDict) => {
-  // f[i] 表示 s 的前 i 个字符是否能被拼接出来
-  // f[i] -> f[i + 1]
+  const n = s.length;
   const set = new Set(wordDict);
-  const f = [];
-  f[0] = true;
-  for (let i = 1; i <= s.length; i++) {
-    let flag = false;
+  // dp[i] 表示 s 的前 i 个字符能否被拆分
+  const dp = new Array(n + 1).fill(false);
+  dp[0] = true;
+  for (let i = 1; i <= n; i++) {
     for (let j = 0; j < i; j++) {
-      if (f[j] && set.has(s.substring(j, i))) {
-        flag = true;
+      if (dp[j] && set.has(s.substring(j, i))) {
+        dp[i] = true;
         break;
       }
     }
-    f[i] = flag;
   }
-  return f[s.length];
-  /*
+  return dp[n];
+};
+
+const wordBreak1 = (s, wordDict) => {
   const dfs = s => {
     if (s === "") return true;
     for (const word of wordDict) {
@@ -24,7 +32,6 @@ const wordBreak = (s, wordDict) => {
     return false;
   };
   return dfs(s);
-   */
 };
 
 const s = "applepenapple";

@@ -7,6 +7,7 @@
 
 此外，你可以假设该网格的四条边均被水包围。
  */
+
 const numIslands = grid => {
   const m = grid.length;
   const n = grid[0].length;

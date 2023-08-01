@@ -14,7 +14,7 @@ const maxCoins = nums => {
   const n = newNums.length;
   // dp[i][j] 表示开区间 (i, j) 内所能获得的最大硬币数量
   // 枚举 (i, j) 内的 k，k 为最后一个被戳破的气球下标
-  // 则 dp[i][j] = max(dp[i][j] + nums[i] * nums[j] * nums[k] + dp[k][j])
+  // 则 dp[i][j] = max(dp[i][k] + nums[i] * nums[j] * nums[k] + dp[k][j])
   const dp = Array.from(Array(n), () => new Array(n).fill(0));
   const enumK = (i, j) => {
     let max = 0;

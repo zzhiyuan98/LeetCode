@@ -5,11 +5,11 @@ const lengthOfLIS = nums => {
   const f = [];
   f[0] = 1;
   for (let i = 1; i < nums.length; i++) {
-    const num = nums[i];
-    let max = -Infinity;
+    let max = 1;
     for (let j = 0; j < i; j++) {
-      const temp = num > nums[j] ? f[j] + 1 : 1;
-      max = Math.max(max, temp);
+      if (nums[i] > nums[j]) {
+        max = Math.max(max, f[j] + 1);
+      }
     }
     f[i] = max;
   }

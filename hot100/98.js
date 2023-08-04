@@ -1,9 +1,8 @@
 const isValidBST = root => {
-  const dfs = (root, min, max) => {
-    if (!root) return true;
-    if (min !== null && root.val <= min) return false;
-    if (max !== null && root.val >= max) return false;
-    return dfs(root.left, min, root.val) && dfs(root.right, root.val, max);
+  const dfs = (node, min, max) => {
+    if (!node) return true;
+    if (node.val <= min || node.val >= max) return false;
+    return dfs(node.left, min, node.val) && dfs(node.right, node.val, max);
   };
-  return dfs(root, null, null);
+  return dfs(root, -Infinity, Infinity);
 };

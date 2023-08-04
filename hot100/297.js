@@ -42,7 +42,7 @@ export const serialize = function(root) {
  */
 export const deserialize = function(data) {
   const values = data.split(",");
-  const getNodeByValue = value => value === "#" ? null : new TreeNode(parseInt(value));
+  const getNodeByValue = value => value === "#" || value === undefined ? null : new TreeNode(parseInt(value));
   const root = getNodeByValue(values.shift());
   const queue = [root];
   while (values.length !== 0) {

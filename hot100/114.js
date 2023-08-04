@@ -12,8 +12,26 @@ function TreeNode(val, left, right) {
   this.right = (right===undefined ? null : right)
 }
 
-// 一边遍历一边展开
-const flatten = root => {
+// 递归
+var flatten = function(root) {
+  let prev = null;
+  const preorder = node => {
+    if (!node) return;
+    if (prev !== null) {
+      prev.right = node;
+    }
+    const left = node.left;
+    const right = node.right;
+    node.left = null;
+    prev = node;
+    preorder(left);
+    preorder(right);
+  };
+  preorder(root);
+};
+
+// 栈
+const flatten1 = root => {
   if (!root) return;
   const stack = [];
   stack.push(root);
@@ -30,8 +48,8 @@ const flatten = root => {
   }
 };
 
-// 前序遍历形成单链表
-const flatten1 = root => {
+// 暴力展开
+const flatten2 = root => {
   const preorder = [];
   const dfs = root => {
     if (!root) return;

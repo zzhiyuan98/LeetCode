@@ -6,21 +6,23 @@
 解集不能包含重复的子集。你可以按任意顺序返回解集。
  */
 
-const subsets = function(nums) {
+function subsets(nums) {
   const ans = [];
-  const dfs = (nums, output, n, start) => {
-    if (output.length === n) {
+  const dfs = (output, rest, size, start) => {
+    if (output.length === size) {
       ans.push(output);
+      return;
     }
-    for (let i = start; i < nums.length; i++) {
-      dfs(nums.slice(0, i).concat(nums.slice(i + 1)), output.concat(nums[i]), n, i);
+    for (let i = start; i < rest.length; i++) {
+      const arr = rest.slice(0, i).concat(rest.slice(i + 1));
+      dfs(output.concat(rest[i]), arr, size, i);
     }
   };
   for (let i = 0; i <= nums.length; i++) {
-    dfs(nums, [], i, 0);
+    dfs([], nums, i, 0);
   }
   return ans;
-};
+}
 
 const subsets1 = nums => {
   const ans = [];

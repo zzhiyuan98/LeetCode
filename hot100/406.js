@@ -7,22 +7,23 @@
 */
 
 const reconstructQueue = people => {
-  const compare = (a, b) => a[0] === b[0] ? b[1] - a[1] : a[0] - b[0];
-
-  people.sort(compare);
-  const queue = Array(people.length);
-  people.forEach((person) => {
-    let count = person[1];
-    let index = 0;
-    while (count) {
-      if (queue[index] === undefined) count--;
-      index++;
+  const compareFn = (a, b) => a[0] === b[0] ? b[1] - a[1] : a[0] - b[0];
+  people.sort(compareFn);
+  const queue = new Array(people.length);
+  for (const [h, k] of people) {
+    let i = 0;
+    let count = 0;
+    while (count !== k) {
+      if (queue[i] === undefined) {
+        count++;
+      }
+      i++;
     }
-    while (queue[index]) {
-      index++;
+    while (queue[i]) {
+      i++;
     }
-    queue[index] = person;
-  });
+    queue[i] = [h, k];
+  }
   return queue;
 };
 

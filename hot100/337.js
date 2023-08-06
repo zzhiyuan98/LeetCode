@@ -26,12 +26,16 @@ var rob = function(root) {
   f.set(null, 0);
   g.set(null, 0);
   const dfs = node => {
-    if (node === null) return;
+    if (!node) return;
     dfs(node.left);
     dfs(node.right);
-    f.set(node, node.val + g.get(node.left) || 0 + g.get(node.right) || 0);
-    g.set(node, Math.max(f.get(node.left) || 0, g.get(node.left) || 0) + Math.max(f.get(node.right) || 0, g.get(node.right) || 0));
+    f.set(node, node.val + g.get(node.left) + g.get(node.right));
+    g.set(node, Math.max(f.get(node.left), g.get(node.left)) + Math.max(f.get(node.right), g.get(node.right)));
   };
   dfs(root);
   return Math.max(f.get(root), g.get(root));
 };
+
+// 7
+const data = "3,2,3,#,3,#,1";
+console.log(rob(deserialize(data)));

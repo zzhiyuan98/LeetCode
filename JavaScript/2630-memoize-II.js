@@ -15,25 +15,19 @@
 function memoize(fn) {
   const map = new Map();
   const argsMap = new Map();
-  const isSame = (key, args) => {
-    if (!argsMap.has(key)) {
-      return false;
-    }
-    const cachedArgs = argsMap.get(key);
-    if (cachedArgs.length !== args.length) {
-      return false;
-    }
-    return args.every((e, i) => e === cachedArgs[i]);
-  };
-  const generateKey = arr => arr.map(e => JSON.stringify(e) || typeof e).toString();
+  let id = 0;
+  const generateKey = args => args.map(arg => argsMap.get(arg)).toString();
   return function(...args) {
-    const key = generateKey(args);
-    if (map.has(key) && isSame(key, args)) {
-      return map.get(key);
+    if (args.every(arg => argsMap.has(arg)) && map.has(generateKey(args))) {
+      return map.get(generateKey(args));
     }
+    args.forEach(arg => {
+      if (!argsMap.has(arg)) {
+        argsMap.set(arg, id++);
+      }
+    });
     const result = fn(...args);
-    map.set(key, result);
-    argsMap.set(key, args);
+    map.set(generateKey(args), result);
     return result;
   }
 }
@@ -58,11 +52,3 @@ const o = {};
 console.log(memoizedFn(o, o), callCount);
 console.log(memoizedFn(o, {}), callCount);
 console.log(memoizedFn(o, o), callCount);
-
-function mytest(...args) {
-  const generateKey = arr => arr.map(e => JSON.stringify(e) || typeof e).toString();
-  console.log("args.length", args.length, args, "key", generateKey(args));
-}
-
-mytest(o, {});
-mytest(o, o);

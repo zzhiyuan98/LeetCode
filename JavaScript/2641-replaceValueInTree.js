@@ -24,14 +24,30 @@
  */
 var replaceValueInTree = function(root) {
   if (!root) {
-    return;
+    return root;
   }
   const queue = [root];
   while (queue.length) {
     const size = queue.length;
+    const layer = [];
     for (let i = 1; i <= size; i++) {
       const node = queue.shift();
+      layer.push(node);
+      if (node.left) {
+        node.left.parent = node;
+        queue.push(node.left);
+      }
+      if (node.right) {
+        node.right.parent = node;
+        queue.push(node.right);
+      }
     }
+    const map = new Map();
+    for (const node of layer) {
+      if (map.has(node.parent)) {
 
+      }
+
+    }
   }
 };

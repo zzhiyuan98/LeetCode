@@ -18,6 +18,9 @@
  *     this.right = (right===undefined ? null : right)
  * }
  */
+
+import {deserialize, serialize} from "../hot100/297.js";
+
 /**
  * @param {TreeNode} root
  * @return {TreeNode}
@@ -45,9 +48,19 @@ var replaceValueInTree = function(root) {
     const map = new Map();
     for (const node of layer) {
       if (map.has(node.parent)) {
-
+        map.set(node.parent, map.get(node.parent) + node.val);
+      } else {
+        map.set(node.parent, node.val);
       }
-
+    }
+    const sum = layer.reduce((prev, curr) => prev + curr.val, 0);
+    for (const node of layer) {
+      node.val = sum - map.get(node.parent);
+      delete node.parent;
     }
   }
+  return root;
 };
+
+const input = "5,4,9,1,10,#,7";
+console.log(serialize(replaceValueInTree(deserialize(input))));

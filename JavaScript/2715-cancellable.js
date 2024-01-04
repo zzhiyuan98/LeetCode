@@ -1,7 +1,7 @@
 /*
 2715. 执行可取消的延迟函数
 
-给定一个函数 fn ，一个参数数组 args 和一个以毫秒为单位的超时时间 t，返回一个取消函数 cancelFn。
+给定一个函数 fn，一个参数数组 args 和一个以毫秒为单位的超时时间 t，返回一个取消函数 cancelFn。
 
 在 cancelTimeMs 的延迟后，返回的取消函数 cancelFn 将被调用。
 
@@ -18,7 +18,10 @@ setTimeout(cancelFn, cancelTimeMs)
  * @return {Function}
  */
 var cancellable = function(fn, args, t) {
-
+  const timer = setTimeout(() => fn(...args), t);
+  return function() {
+    clearTimeout(timer);
+  };
 };
 
 /**

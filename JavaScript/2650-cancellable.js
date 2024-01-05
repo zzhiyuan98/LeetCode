@@ -15,8 +15,24 @@
  * @return {[Function, Promise]}
  */
 var cancellable = function(generator) {
-
-
+  let cancel = () => {};
+  const promise = new Promise((resolve, reject) => {
+    cancel = () => run("Cancelled", "throw");
+    run(null);
+    function run(res, fnName = "next") {
+      try {
+        const { value, done } = generator[fnName](res);
+        if (done) {
+          resolve(value);
+          return;
+        }
+        value.then(run).catch(err => run(err, "throw"));
+      } catch (errorByGenerator) {
+        reject(errorByGenerator);
+      }
+    }
+  });
+  return [cancel, promise];
 };
 
 /**

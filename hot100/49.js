@@ -16,6 +16,19 @@ const groupAnagrams = strs => {
   return [...map.values()];
 };
 
+var groupAnagrams1 = function(strs) {
+  const map = new Map();
+  strs.forEach(str => {
+    const sorted = str.split("").sort().join("");
+    if (map.has(sorted)) {
+      map.set(sorted, map.get(sorted).concat(str));
+    } else {
+      map.set(sorted, [str]);
+    }
+  });
+  return Array.from(map.values());
+};
+
 // expected output: [["bat"],["nat","tan"],["ate","eat","tea"]]
 const strs = ["eat", "tea", "tan", "ate", "nat", "bat"];
 console.log(groupAnagrams(strs));

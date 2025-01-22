@@ -42,5 +42,22 @@ const lengthOfLongestSubstring1 = s => {
   return max;
 };
 
+var lengthOfLongestSubstring2 = function(s) {
+  let max = 0;
+  let left = 0;
+  let right = 0;
+  const map = new Map();
+  while (right < s.length) {
+    const char = s[right];
+    if (map.has(char) && map.get(char) >= left) {
+      max = Math.max(right - left, max);
+      left = map.get(char) + 1;
+    }
+    map.set(char, right);
+    right++;
+  }
+  return Math.max(max, right - left);
+};
+
 const s = "abcabcbb";
 console.log(lengthOfLongestSubstring(s));
